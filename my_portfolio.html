@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Personal Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #e5e7eb;
+            background-color: #0d121c;
+            background-image: url('https://images.unsplash.com/photo-1462331940025-a1cfa0f20107?q=80&w=1920&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Denser Star field effect */
+        .stars, .stars2, .stars3 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -10;
+        }
+        
+        .stars {
+            background-image: 
+                radial-gradient(1.5px 1.5px at 20% 30%, #fff, rgba(255, 255, 255, 0)),
+                radial-gradient(1px 1px at 40% 70%, #fff, rgba(255, 255, 255, 0)),
+                radial-gradient(1.5px 1.5px at 60% 10%, #fff, rgba(255, 255, 255, 0)),
+                radial-gradient(1px 1px at 80% 50%, #fff, rgba(255, 255, 255, 0)),
+                radial-gradient(1.5px 1.5px at 90% 90%, #fff, rgba(255, 255, 255, 0)),
+                radial-gradient(1px 1px at 10% 80%, #fff, rgba(255, 255, 255, 0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: move-stars 100s linear infinite, twinkle 2s infinite alternate;
+        }
+        
+        .stars2 {
+            background-image: 
+                radial-gradient(1px 1px at 10% 90%, #fff, rgba(255, 255, 255, 0)),
+                radial-gradient(1.5px 1.5px at 30% 20%, #fff, rgba(255, 255, 255, 0)),
+                radial-gradient(1px 1px at 50% 80%, #fff, rgba(255, 255, 255, 0)),
+                radial-gradient(1.5px 1.5px at 70% 30%, #fff, rgba(255, 255, 255, 0)),
+                radial-gradient(1px 1px at 90% 10%, #fff, rgba(255, 255, 255, 0));
+            background-repeat: repeat;
+            background-size: 150px 150px;
+            animation: move-stars 120s linear infinite, twinkle 3s infinite alternate;
+        }
+
+        .stars3 {
+            background-image: radial-gradient(1px 1px at 50% 50%, #fff, rgba(255, 255, 255, 0));
+            background-repeat: repeat;
+            background-size: 250px 250px;
+            animation: twinkle 2.5s infinite alternate;
+            z-index: -10;
+        }
+        
+        @keyframes move-stars {
+            from { background-position: 0 0; }
+            to { background-position: 100% 100%; }
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        /* Continuous float animation for project cards */
+        @keyframes continuous-float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        .project-card-1 {
+            animation: continuous-float 2.5s ease-in-out infinite;
+        }
+        .project-card-2 {
+            animation: continuous-float 2.7s ease-in-out infinite;
+            animation-delay: 0.5s;
+        }
+        .project-card-3 {
+            animation: continuous-float 2.6s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+
+        /* Custom styles for the rolling eye */
+        .eye-container {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 80px;
+            height: 80px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .eye {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            border-radius: 50%;
+            border: 4px solid #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .pupil {
+            width: 35%;
+            height: 35%;
+            background-color: #374151;
+            border-radius: 50%;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Blinking eye in the word "touch" */
+        @keyframes blink {
+            0%, 20%, 100% {
+                transform: scaleY(1);
+            }
+            10%, 15% {
+                transform: scaleY(0.1);
+            }
+        }
+        .blinking-eye-o {
+            position: relative;
+            display: inline-block;
+            width: 0.8em; /* Adjust size based on font size */
+            height: 0.8em;
+            background-color: #fff;
+            border-radius: 50%;
+            vertical-align: middle;
+            animation: blink 3s infinite;
+            overflow: hidden; /* Ensures the pseudo-element stays within bounds */
+        }
+        .blinking-eye-o::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40%;
+            height: 40%;
+            background-color: #374151;
+            border-radius: 50%;
+        }
+
+        /* Rover-themed buttons */
+        .rover-btn {
+            background: linear-gradient(145deg, #1e293b, #0c1524);
+            border: 2px solid #334155;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 5px rgba(255, 255, 255, 0.2);
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 9999px;
+            color: #e5e7eb;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .rover-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7), inset 0 0 10px rgba(255, 255, 255, 0.3);
+            background: linear-gradient(145deg, #2e415b, #1d2c3e);
+        }
+
+        .rover-btn::before, .rover-btn::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s ease-in-out;
+            opacity: 0;
+        }
+
+        .rover-btn::before {
+            top: -20px;
+            left: -20px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .rover-btn::after {
+            bottom: -20px;
+            right: -20px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .rover-btn:hover::before, .rover-btn:hover::after {
+            opacity: 1;
+            transform: scale(3);
+        }
+
+        /* Special style for the hero button */
+        .rover-btn-special {
+            background: linear-gradient(145deg, #214e8a, #0b2c52);
+            border: 2px solid #3b82f6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.7), inset 0 0 8px rgba(255, 255, 255, 0.3);
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 9999px;
+            color: #e5e7eb;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .rover-btn-special:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 1), inset 0 0 15px rgba(255, 255, 255, 0.4);
+            animation: pulse-glow 1.5s infinite ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.7), inset 0 0 8px rgba(255, 255, 255, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(59, 130, 246, 1), inset 0 0 15px rgba(255, 255, 255, 0.4); }
+            100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.7), inset 0 0 8px rgba(255, 255, 255, 0.3); }
+        }
+
+        /* Flipping Photo Card Styles */
+        .flip-card-container {
+            perspective: 1000px;
+            width: 15rem; /* Equivalent to w-64 */
+            height: 15rem; /* Equivalent to h-64 */
+            position: relative;
+            cursor: pointer;
+            border-radius: 9999px; /* Equivalent to rounded-full */
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            border-radius: 9999px;
+        }
+
+        .flip-card-container:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            object-fit: cover;
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Star layers -->
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+
+    <!-- Header & Navigation -->
+    <header class="bg-gray-900 shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white rounded-lg p-2 transition-colors duration-300 hover:bg-gray-700">Jane Doe</a>
+            <div class="flex space-x-4 md:space-x-6 text-gray-300 font-semibold">
+                <a href="#about" class="rounded-lg p-2 transition-colors duration-300 hover:bg-gray-700 hover:text-white">About</a>
+                <a href="#portfolio" class="rounded-lg p-2 transition-colors duration-300 hover:bg-gray-700 hover:text-white">Portfolio</a>
+                <a href="#contact" class="rounded-lg p-2 transition-colors duration-300 hover:bg-gray-700 hover:text-white">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 relative z-10">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+                <!-- Typing text will be injected here -->
+                <h1 id="typing-text" class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-4"></h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-6">I am a passionate web developer with a love for creating beautiful and functional digital experiences.</p>
+                <a href="#portfolio" class="rover-btn-special">View My Work</a>
+            </div>
+            <div class="md:w-1/2 flex justify-center md:justify-end">
+                <!-- Flipping Photo Card -->
+                <div class="flip-card-container">
+                    <div class="flip-card-inner">
+                        <img class="flip-card-front" src="https://placehold.co/256x256/1f2937/ffffff?text=Jane" alt="A profile photo of Jane Doe">
+                        <img class="flip-card-back" src="https://placehold.co/256x256/3B82F6/ffffff?text=Avatar" alt="An avatar placeholder">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-gray-900 bg-opacity-70 py-16 md:py-24 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12">About Me</h2>
+            <div class="max-w-3xl mx-auto text-center">
+                <p class="text-gray-300 text-lg mb-4">I'm a self-taught developer who found my passion in building user-friendly and visually appealing websites. My journey began with a simple "Hello, World!" and has since evolved into a full-time pursuit of mastering new technologies and solving complex problems.</p>
+                <p class="text-gray-300 text-lg">When I'm not coding, you can find me hiking new trails, exploring local coffee shops, or experimenting with new recipes in the kitchen. I believe in a balanced life and bringing creativity into everything I do.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="bg-gray-800 bg-opacity-70 py-16 md:py-24 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12">My Portfolio</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Portfolio Item 1 -->
+                <div class="project-card-1 bg-gray-900 rounded-lg shadow-lg p-6">
+                    <img class="rounded-lg mb-4" src="https://placehold.co/400x300/1f2937/d1d5db?text=Project+1" alt="Project 1 preview">
+                    <h3 class="text-xl font-bold text-white mb-2">Project One</h3>
+                    <p class="text-gray-400">A responsive landing page built with Tailwind CSS, showcasing a modern and minimalist design.</p>
+                    <a href="#" class="inline-block mt-4 text-blue-400 hover:text-blue-300 transition-colors duration-300">View Project &rarr;</a>
+                </div>
+                <!-- Portfolio Item 2 -->
+                <div class="project-card-2 bg-gray-900 rounded-lg shadow-lg p-6">
+                    <img class="rounded-lg mb-4" src="https://placehold.co/400x300/1f2937/d1d5db?text=Project+2" alt="Project 2 preview">
+                    <h3 class="text-xl font-bold text-white mb-2">Project Two</h3>
+                    <p class="text-gray-400">A dynamic web application using vanilla JavaScript to create an interactive user experience.</p>
+                    <a href="#" class="inline-block mt-4 text-blue-400 hover:text-blue-300 transition-colors duration-300">View Project &rarr;</a>
+                </div>
+                <!-- Portfolio Item 3 -->
+                <div class="project-card-3 bg-gray-900 rounded-lg shadow-lg p-6">
+                    <img class="rounded-lg mb-4" src="https://placehold.co/400x300/1f2937/d1d5db?text=Project+3" alt="Project 3 preview">
+                    <h3 class="text-xl font-bold text-white mb-2">Project Three</h3>
+                    <p class="text-gray-400">An e-commerce site prototype developed with React, focusing on state management and component reusability.</p>
+                    <a href="#" class="inline-block mt-4 text-blue-400 hover:text-blue-300 transition-colors duration-300">View Project &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-gray-900 bg-opacity-70 py-16 md:py-24 relative z-10">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-white mb-12">Get In T<span class="blinking-eye-o"></span>uch</h2>
+            <div class="max-w-2xl mx-auto">
+                <p class="text-gray-300 text-lg text-center mb-6">I'm always open to new opportunities and collaborations. Feel free to reach out!</p>
+                <div class="flex justify-center space-x-4 md:space-x-6">
+                    <a href="mailto:jane.doe@example.com" class="rover-btn">Email Me</a>
+                    <a href="#" class="rover-btn">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rolling Eye -->
+    <div class="eye-container">
+        <div class="eye">
+            <div class="pupil"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 bg-opacity-70 text-gray-500 py-8 relative z-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Jane Doe. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript for the rolling eye, typing effect, and parallax -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const eye = document.querySelector('.eye');
+            const pupil = document.querySelector('.pupil');
+            const stars = document.querySelector('.stars');
+            const stars2 = document.querySelector('.stars2');
+            const stars3 = document.querySelector('.stars3');
+            
+            // Eye movement
+            document.addEventListener('mousemove', (e) => {
+                const rect = eye.getBoundingClientRect();
+                const eyeCenterX = rect.left + rect.width / 2;
+                const eyeCenterY = rect.top + rect.height / 2;
+                const angleRad = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
+                const maxRadius = rect.width / 2 * 0.4;
+                const pupilX = maxRadius * Math.cos(angleRad);
+                const pupilY = maxRadius * Math.sin(angleRad);
+                pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+            });
+
+            // Typing effect
+            const textElement = document.getElementById('typing-text');
+            const textToType = "Hello, I'm Jane.";
+            let charIndex = 0;
+            let isDeleting = false;
+            let typingSpeed = 100;
+
+            function type() {
+                const currentText = isDeleting ? textToType.substring(0, charIndex--) : textToType.substring(0, charIndex++);
+                textElement.textContent = currentText;
+
+                if (!isDeleting && charIndex > textToType.length) {
+                    typingSpeed = 2000;
+                    isDeleting = true;
+                    setTimeout(type, typingSpeed);
+                } else if (isDeleting && charIndex < 0) {
+                    isDeleting = false;
+                    typingSpeed = 100;
+                    setTimeout(type, 500);
+                } else {
+                    typingSpeed = isDeleting ? 50 : 100;
+                    setTimeout(type, typingSpeed);
+                }
+            }
+            
+            type();
+
+            // Parallax effect
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                stars.style.transform = `translateY(-${scrollY * 0.1}px)`;
+                stars2.style.transform = `translateY(-${scrollY * 0.3}px)`;
+                stars3.style.transform = `translateY(-${scrollY * 0.5}px)`;
+            });
+        });
+    </script>
+
+</body>
+</html>
